@@ -1,0 +1,12 @@
+services:
+
+  app.default_controller:
+    class: AppBundle\Controller\DefaultController
+    arguments: ["@repository.printer"]
+    calls:
+      - [ setContainer, ["@service_container"] ]
+
+  repository.printer:
+    class: AppBundle\Repository\PrinterRepository
+    arguments: ["@session"]
+
