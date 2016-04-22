@@ -1,0 +1,82 @@
+
+{% block body %}
+    <div class="grids clearfix" data-keyboard-shortcuts>
+    {% spaceless %}
+
+        {% embed "@App/default/includes/grid.html.twig" %}
+            {% block title %}Top{% endblock %}
+            {% block cell %}<div data-ng-class="projections.top.coord({{ x }},{{ y }})" data-ng-mouseenter="add({{ x }},{{ y }})"></div>{% endblock %}
+        {% endembed %}
+
+        {% embed "@App/default/includes/grid.html.twig" %}
+            {% block title %}Front{% endblock %}
+            {% block cell %}<div data-ng-class="projections.front.coord({{ x }},{{ 10-y }})"></div>{% endblock %}
+        {% endembed %}
+
+        {% embed "@App/default/includes/grid.html.twig" %}
+            {% block title %}Left{% endblock %}
+            {% block cell %}<div data-ng-class="projections.left.coord({{ x }},{{ 10-y }})"></div>{% endblock %}
+        {% endembed %}
+
+    {% endspaceless %}
+    </div>
+    <button data-ng-click="clear()">clear (c)</button>
+    <button data-ng-click="nozzle()">toggle nozzle (n)</button>
+    <button data-ng-click="next()">next layer (l)</button>
+    <a href="#result">Show Result</a>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .grids {
+            margin: 20px;
+        }
+
+        .voxel-grid-container {
+            display: table;
+            border-collapse: collapse;
+            float: left;
+            margin-left: 8px;
+        }
+
+        .voxel-grid-container h2 {
+            display: table-caption;
+        }
+
+        .voxel-grid-container div {
+            display: table-row;
+            margin: 0;
+            border: 0;
+            padding: 0;
+            vertical-align: top;
+        }
+
+        .voxel-grid-container div div {
+            display: table-cell;
+            border: 1px solid;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+        }
+
+        .voxel-grid-container div div:hover {
+            background-color: #2e6da4;
+        }
+
+        .voxel {
+            background-color: darkred;
+        }
+
+        .clearfix:after {
+            content: " ";
+            display: block;
+            height: 0;
+            clear: both;
+        }
+    </style>
+{% endblock %}

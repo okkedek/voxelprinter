@@ -27,16 +27,9 @@ class Printer
      */
     protected $nozzleOpen = true;
 
-    /**
-     * @var int timestamp of last voxel printed
-     */
-    protected $lastVoxelMicroTime;
-
-
-    public function __construct($print_speed_milli = 1000 )
+    public function __construct( )
     {
         $this->model = new VoxelModel();
-        $this->print_speed_micro = (float) $print_speed_milli / 1000;
     }
 
     /**
@@ -47,10 +40,8 @@ class Printer
      */
     public function moveNozzle($x, $y)
     {
-        $nowMicro = microtime(true);
-        if ($this->nozzleOpen === true && $nowMicro - $this->lastVoxelMicroTime >= $this->print_speed_micro) {
-            $this->model->add( new Voxel($x, $y, $this->layer));
-            $this->lastVoxelMicroTime = $nowMicro;
+        if ($this->nozzleOpen === true ) {
+            $this->model->add( new Voxel($x,  $this->layer, $y));
         }
     }
 
@@ -74,6 +65,11 @@ class Printer
         return $this->model;
     }
 
+    public function getCurrentLayer()
+    {
+        return $this->layer;
+    }
+
     public function nextLayer()
     {
         $this->layer++;
@@ -82,6 +78,11 @@ class Printer
     public function clear()
     {
         $this->model = new VoxelModel();
+    }
+
+    public function toggleNozzle()
+    {
+        $this->nozzleOpen = !$this->nozzleOpen;
     }
 
 

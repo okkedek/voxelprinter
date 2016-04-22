@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository;
 
-
 use AppBundle\Entity\Printer;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 

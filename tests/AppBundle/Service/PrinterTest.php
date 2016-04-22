@@ -14,7 +14,7 @@ class PrinterTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->printer = new Printer( $print_speed_ms = 0);
+        $this->printer = new Printer();
     }
 
     public function testSingleLayer()
@@ -65,26 +65,6 @@ class PrinterTest extends PHPUnit_Framework_TestCase
         $model = $printer->getVoxelModel();
         $this->assertEquals(8 , $model->getVoxelCount());
     }
-
-
-    public function testPrinterInterval()
-    {
-        $printer = new Printer( 100 );
-
-        $printer->moveNozzle(0,0);
-        $printer->moveNozzle(0,1);
-        $printer->moveNozzle(0,2);
-        $printer->moveNozzle(1,2);
-
-        $model = $printer->getVoxelModel();
-        $this->assertEquals(1 , $model->getVoxelCount());
-
-        usleep(100000);
-
-        $printer->moveNozzle(3,3);
-        $this->assertEquals(2 , $model->getVoxelCount());
-    }
-
 
     public function testNozzle()
     {

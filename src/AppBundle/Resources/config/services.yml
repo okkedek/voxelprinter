@@ -1,7 +1,7 @@
 services:
 
-  app.default_controller:
-    class: AppBundle\Controller\DefaultController
+  app.printer_controller:
+    class: AppBundle\Controller\PrinterController
     arguments: ["@repository.printer"]
     calls:
       - [ setContainer, ["@service_container"] ]
