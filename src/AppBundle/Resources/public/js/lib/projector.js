@@ -1,8 +1,9 @@
 
-    function Projector(voxelModel, vector ) {
+    function Projector(voxels, vector ) {
 
+        var projectionAxis;
         var axes = determineAxes(vector);
-        var projection = project(voxelModel.voxels, axes);
+        var projection = project(voxels, axes);
 
         function project(voxels, axes) {
             var projection = [];
@@ -11,7 +12,7 @@
                 if (typeof projection[voxel[axes[0]]] == "undefined") {
                     projection[voxel[axes[0]]] = [];
                 }
-                projection[voxel[axes[0]]] [voxel[axes[1]]] = voxel[axes[2]]+1;
+                projection[voxel[axes[0]]] [voxel[axes[1]]] = voxel[axes[2]];
             }
 
             return projection;
@@ -21,7 +22,7 @@
             var axes = [];
             for (var axis in vector) {
                 if (vector[axis] != 0) {
-                    var projectionAxis = axis;
+                    projectionAxis = axis;
                 } else {
                     axes.push(axis);
                 }
@@ -31,9 +32,18 @@
             return axes;
         }
 
-        this.coord = function (x,y) {
+        this.valueAt = function (x,y) {
+            return (projection[x] != undefined && projection[x][y] != undefined ? projection[x][y] : undefined);
+        }
 
-            return (projection[x] != undefined && projection[x][y] != undefined ? "voxel" : "");
+        this.layerOf = function(x,y) {
+            switch (projectionAxis) {
+                case "y":
+                    return this.valueAt(x,y);
+                case "x":
+                case "z":
+                    return y;
+            }
         }
 
     }

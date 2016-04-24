@@ -1,0 +1,15 @@
+
+<section id="print" class="no-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">{% block title %}{% endblock %}</h2>
+                <hr class="primary">
+                <p class="text-faded">{% block description %}{% endblock %}</p>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</section>
+
+{% block stylesheets %}{% endblock %}

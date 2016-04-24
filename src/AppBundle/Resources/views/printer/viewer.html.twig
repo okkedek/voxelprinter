@@ -1,0 +1,16 @@
+{% extends '@App/printer/container.html.twig' %}
+
+{% block title %}Here's your creation!{% endblock %}
+{% block description %}Use your mouse to rotate and zoom the model. Press <em>back</em> to return.{% endblock %}
+
+{% block content %}
+    <div class="row clearfix">
+        <div class="col-xs-12 text-center">
+            <iframe id="vs_iframe"
+                    src="http://www.viewstl.com/?embeded&amp;noborder=yes&amp;bgcolor=white&amp;clean=no&amp;url={{ model_url | url_encode }}"
+                    style="border:0;margin:0;width:400px; height:300px"></iframe>
+            <a class="btn btn-success clearfix" href="#snap">Snap for showcase</a>
+            <a class="btn btn-info clearfix" href="#/">Back</a>
+        </div>
+    </div>
+{% endblock %}

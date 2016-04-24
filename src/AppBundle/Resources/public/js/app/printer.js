@@ -24,16 +24,16 @@ printer.config(function ($routeProvider, URL_PREFIX) {
         .otherwise({redirectTo: '/'});
 });
 
-printer.service('printerService', function ($http) {
+printer.service('printerService', function ($http, URL_PREFIX) {
 
-    var prefix = "/printer";
     var self = this;
-    this.projections = {};
+    this.projectors = {};
+    this.currentLayer = 0;
 
     this.loadVoxelModel = function () {
         return $http({
             method: 'GET',
-            url: prefix + '/load'
+            url: URL_PREFIX + '/load'
         }).then(function successCallback(response) {
             updateVoxelModel(response.data);
         });
@@ -42,7 +42,7 @@ printer.service('printerService', function ($http) {
     this.addVoxel = function (x, y) {
         return $http({
             method: "POST",
-            url: prefix + "/move",
+            url: URL_PREFIX + "/move",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             data: $.param({coord: [x, y]}),
         }).then(function (response) {
@@ -53,7 +53,7 @@ printer.service('printerService', function ($http) {
     this.nextLayer = function () {
         return $http({
             method: "POST",
-            url: prefix + "/next"
+            url: URL_PREFIX + "/next"
         }).then(function (response) {
             updateVoxelModel(response.data);
         });
@@ -62,7 +62,7 @@ printer.service('printerService', function ($http) {
     this.toggleNozzle = function () {
         return $http({
             method: "POST",
-            url: prefix + "/nozzle"
+            url: URL_PREFIX + "/nozzle"
         }).then(function (response) {
             updateVoxelModel(response.data);
         });
@@ -71,16 +71,17 @@ printer.service('printerService', function ($http) {
     this.clear = function () {
         return $http({
             method: "POST",
-            url: prefix + "/clear"
+            url: URL_PREFIX + "/clear"
         }).then(function (response) {
             updateVoxelModel(response.data);
         });
     };
 
-    function updateVoxelModel(voxels) {
-        self.projections.top = new Projector(voxels, {x: 0, y: 1, z: 0});
-        self.projections.front = new Projector(voxels, {x: 0, y: 0, z: 1});
-        self.projections.left = new Projector(voxels, {x: 1, z: 0, y: 0});
+    function updateVoxelModel(voxelModel) {
+        self.currentLayer = voxelModel.currentLayer;
+        self.projectors.top = new Projector(voxelModel.voxels, {x: 0, y: 1, z: 0});
+        self.projectors.front = new Projector(voxelModel.voxels, {x: 0, y: 0, z: 1});
+        self.projectors.left = new Projector(voxelModel.voxels, {x: 1, z: 0, y: 0});
     }
 });
 
@@ -101,7 +102,7 @@ printer.directive('keyboardShortcuts', ['$document', function ($document) {
 printer.controller('printerController', function ($scope, printerService) {
     $scope.init = function () {
         printerService.loadVoxelModel().then(function () {
-            $scope.projections = printerService.projections;
+            $scope.projectors = printerService.projectors;
         });
     };
 
@@ -121,6 +122,22 @@ printer.controller('printerController', function ($scope, printerService) {
         printerService.clear();
     };
 
+    $scope.classMap = function(projector, x, y) {
+        if (projector == undefined) return [];
+        var classes = [];
+        var value = projector.valueAt(x, y);
+        if (value != undefined) {
+            classes.push("voxel");
+        }
+        var distance = printerService.currentLayer - projector.layerOf(x, y);
+        if (distance == 0) {
+            classes.push("current");
+        } else if (distance == 1) {
+            classes.push("previous");
+        }
+        return classes;
+    };
+
     $scope.keypress = function (keycode) {
         switch (keycode) {
             case 76: //l
@@ -133,7 +150,7 @@ printer.controller('printerController', function ($scope, printerService) {
                 printerService.toggleNozzle();
                 break;
         }
-    }
+    };
 
     $scope.init();
 });

@@ -35,7 +35,7 @@ class PrinterController extends Controller
             'width' => 10,
             'height' => 10,
         ];
-        return $this->render('@App/printer/grid.html.twig', $viewModel);
+        return $this->render('@App/printer/printer.html.twig', $viewModel);
     }
 
     /**
@@ -120,7 +120,7 @@ class PrinterController extends Controller
      */
     public function resultAction(Request $request)
     {
-        return $this->render('@App/printer/stl-viewer.html.twig', [
+        return $this->render('@App/printer/viewer.html.twig', [
             'model_url' => $this->generateUrl(
                 'printer_stlmodel',
                 ['sid' => $this->get('session')->getId()],
@@ -138,7 +138,7 @@ class PrinterController extends Controller
     protected function renderResponse(Printer $printer)
     {
         return new JsonResponse([
-                'current_layer' => $printer->getCurrentLayer(),
+                'currentLayer' => $printer->getCurrentLayer(),
                 'voxels' => $printer->getVoxelModel()->getVoxels(),
             ]
         );

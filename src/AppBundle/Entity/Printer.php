@@ -6,24 +6,18 @@ namespace AppBundle\Entity;
 
 class Printer
 {
-
     /**
-     * Number of millisecond between voxels printed
-     */
-    protected $print_speed_micro;
-
-    /**
-     * @var VoxelModel
+     * @var VoxelModel Represents the printed model
      */
     protected $model;
 
     /**
-     * @var int current layer being printed
+     * @var int Current layer being printed
      */
     protected $layer = 0;
 
     /**
-     * @var bool true if nozzle is open
+     * @var bool Nozzle state, true if nozzle is open
      */
     protected $nozzleOpen = true;
 
@@ -78,6 +72,7 @@ class Printer
     public function clear()
     {
         $this->model = new VoxelModel();
+        $this->layer = 0;
     }
 
     public function toggleNozzle()

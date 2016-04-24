@@ -1,0 +1,103 @@
+{% extends '@App/printer/container.html.twig' %}
+
+{% block title %}Print!{% endblock %}
+{% block description %}Using the <em>top</em> view, try and print a 3d model, layer by layer, starting at
+the bottom and working your way up. Good luck!{% endblock %}
+{% block content %}
+    <div class="row clearfix" data-keyboard-shortcuts>
+        {% spaceless %}
+        <div class="col-xs-12 col-sm-12 col-md-4 text-center center-block" style="text-align: center;">
+            {% embed "@App/default/includes/grid.html.twig" %}
+                {% block title %}Top{% endblock %}
+                {% block cell %}
+                <div data-ng-class="classMap( projectors.top, {{ x }},{{ y }})"
+                     data-ng-mouseenter="add({{ x }},{{ y }})"></div>{% endblock %}
+            {% endembed %}
+            <div class="clearfix">
+                <br>
+                <button class="btn btn-primary margin-8" data-ng-click="clear()">clear (c)</button>
+                <button class="btn btn-success margin-8" data-ng-click="nozzle()">toggle nozzle (n)</button>
+                <button class="btn btn-success margin-8" data-ng-click="next()">next layer (l)</button>
+                <a class="btn btn-info margin-8" href="#result">Show Result</a>
+                <br>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 hidden-xs">
+            {% embed "@App/default/includes/grid.html.twig" %}
+                {% block title %}Front{% endblock %}
+                {% block cell %}
+                <div data-ng-class="classMap( projectors.front, {{ x }},{{ 10-y }})"></div>{% endblock %}
+            {% endembed %}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 hidden-xs">
+            {% embed "@App/default/includes/grid.html.twig" %}
+                {% block title %}Left{% endblock %}
+                {% block cell %}
+                <div data-ng-class="classMap( projectors.left, {{ x }},{{ 10-y }})"></div>{% endblock %}
+            {% endembed %}
+
+            {% endspaceless %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .margin-8 {
+            margin: 0 8px 8px 0;
+        }
+
+        .voxel-grid-container {
+            display: table;
+            border-collapse: collapse;
+        }
+
+        .voxel-grid-container h2 {
+            display: table-caption;
+        }
+
+        .voxel-grid-container div {
+            display: table-row;
+            margin: 0;
+            border: 0;
+            padding: 0;
+            vertical-align: top;
+        }
+
+        .voxel-grid-container div div {
+            display: table-cell;
+            border: 1px solid;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+        }
+
+        .voxel-grid-container div div:hover {
+            background-color: #2e6da4;
+        }
+
+        .voxel.current {
+            background-color: darkred;
+        }
+
+        .voxel.previous {
+            background-color: #664444;
+        }
+
+        .voxel {
+            background-color: grey;
+        }
+
+        .clearfix {
+            clear: both;
+        }
+
+        .clearfix:after {
+            content: " ";
+            display: block;
+            height: 0;
+            clear: both;
+        }
+    </style>
+{% endblock %}

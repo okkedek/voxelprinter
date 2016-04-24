@@ -1,15 +1,248 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
-    <h1>VoxelPrinter</h1>
-    <div data-ng-view="">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Home</a>
+            </div>
 
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#instructions">Instructions</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#print">Print!</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#creations">Creations</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>Be a 3D printer head!</h1>
+                <hr>
+                <p>Become a better human being by pretending to be a 3d printer for a while</p>
+                <a href="#instructions" target="_self" class="btn btn-primary btn-xl page-scroll">Tell me how?</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="instructions">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Instructions</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="bg-info container">
+            <div class="row">
+                <div class="col-sm-6 col-md-3 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-lightbulb-o wow bounceIn text-primary"></i>
+                        <h3>Imagine something</h3>
+                        <p class="text-muted">Think about what you want to print.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-eye wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                        <h3>Three views</h3>
+                        <p class="text-muted">You will see your model from three sides: top, front and left.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-mouse-pointer wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h3>Print!</h3>
+                        <p class="text-muted">Using the <em>top</em> view only, build your model from the bottom up by
+                            moving your mouse.</p>
+                        <p class="text-muted hidden-xs">Keyboard shortcuts you can use:</p>
+                        <div class="clear-fix hidden-xs" style="text-align: left;">
+                            <span class="fa-stack fa-1x">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <strong class="fa-stack-1x text-primary">n</strong>
+                            </span>open/close the printer nozzle<br>
+                            <span class="fa-stack fa-1x">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <strong class="fa-stack-1x text-primary">l</strong>
+                            </span>moves to the next layer<br>
+                            <span class="fa-stack fa-1x">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <strong class="fa-stack-1x text-primary">c</strong>
+                            </span>clears everything<br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-map wow bounceIn text-primary" data-wow-delay=".3s"></i>
+                        <h3>Watch the result</h3>
+                        <p class="text-muted">Once your done click the <em>show result</em> button to see the 3D result</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container text-center">
+                <div class="call-to-action col-sm-12 text-center">
+                    <p>
+                        <br>
+                        <a href="#print" target="_self" class="btn btn-primary btn-xl page-scroll">Let me try!</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div data-ng-view="">
     </div>
 
+    <section class="no-padding" id="creations">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Creations</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row no-gutter">
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" target="_self" class="portfolio-box">
+                        <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" target="_self" class="portfolio-box">
+                        <img src="{{ asset('bundles/app/img/portfolio/2.jpg') }}" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" target="_self" class="portfolio-box">
+                        <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">View the source</h2>
+                    <hr class="primary">
+                    <p>The code for this project is <a href="" class="btn btn-primary btn-lg">available via github</a.</p>
+                </div>
+                <div class="col-lg-4 col-lg-offset-2 text-center">
+                    <i class="fa fa-phone fa-3x wow bounceIn"></i>
+                    <p>123-456-6789</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
+                    <p><a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}
 
-{% block stylesheets %}
-
-{% endblock %}
+{% block stylesheets %}{% endblock %}
