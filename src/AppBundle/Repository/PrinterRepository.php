@@ -24,7 +24,7 @@ class PrinterRepository
         $printer = $this->session->get(self::$SESSION_KEY);
 
         if ($printer === null) {
-            $printer = new Printer(0);
+            $printer = new Printer();
         }
 
         return $printer;

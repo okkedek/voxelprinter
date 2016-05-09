@@ -19,11 +19,8 @@ class AppExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-//        die;
         $configPath = __DIR__.'/../Resources/config';
         $loader = new Loader\YamlFileLoader($container, new FileLocator($configPath));
         $loader->load('services.yml');
-//        $loader->load('validators.yml');
-//        $loader->load('forms.yml');
     }
 }

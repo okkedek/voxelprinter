@@ -29,7 +29,7 @@ class PrinterController extends Controller
     /**
      * @Route("/grid", name="printer_grid")
      */
-    public function gridAction(Request $request)
+    public function gridAction()
     {
         $viewModel = [
             'width' => 10,
@@ -41,7 +41,7 @@ class PrinterController extends Controller
     /**
      * @Route("/load", name="printer_load")
      */
-    public function loadAction(Request $request)
+    public function loadAction()
     {
         $printer = $this->printerRepository->loadPrinter();
 
@@ -50,6 +50,9 @@ class PrinterController extends Controller
 
     /**
      * @Route("/move", name="printer_move")
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function moveAction(Request $request)
     {
@@ -64,7 +67,7 @@ class PrinterController extends Controller
     /**
      * @Route("/next", name="printer_next_layer")
      */
-    public function nextLayerAction(Request $request)
+    public function nextLayerAction()
     {
         $printer = $this->printerRepository->loadPrinter();
         $printer->nextLayer();
@@ -76,7 +79,7 @@ class PrinterController extends Controller
     /**
      * @Route("/nozzle", name="printer_toggle_nozzle")
      */
-    public function toggleNozzleAction(Request $request)
+    public function toggleNozzleAction()
     {
         $printer = $this->printerRepository->loadPrinter();
         $printer->toggleNozzle();
@@ -88,7 +91,7 @@ class PrinterController extends Controller
     /**
      * @Route("/clear", name="printer_clear")
      */
-    public function clearAction(Request $request)
+    public function clearAction()
     {
         $printer = $this->printerRepository->loadPrinter();
         $printer->clear();
@@ -98,10 +101,17 @@ class PrinterController extends Controller
     }
 
     /**
+     * Used by external STL viewer to load the STl model
+     *
      * @Route("/model/{sid}.stl", name="printer_stlmodel")
+     * @param $sid
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function resultModelAction($sid)
     {
+        // we have to use the session id from the url
+        // in order to load the correct model
         $session = $this->container->get('session');
         $session->save(); // closes the current session
         $session->setId(explode(".", $sid)[0]);
@@ -118,7 +128,7 @@ class PrinterController extends Controller
     /**
      * @Route("/result", name="printer_result")
      */
-    public function resultAction(Request $request)
+    public function resultAction()
     {
         return $this->render('@App/printer/viewer.html.twig', [
             'model_url' => $this->generateUrl(

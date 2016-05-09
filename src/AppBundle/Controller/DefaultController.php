@@ -16,7 +16,7 @@ class DefaultController extends Controller
      * @Route("/", name="app_index")
      *
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         return $this->render('@App/default/index.html.twig');
     }

@@ -6,8 +6,8 @@ the bottom and working your way up. Good luck!{% endblock %}
 {% block content %}
     <div class="row clearfix" data-keyboard-shortcuts>
         {% spaceless %}
-        <div class="col-xs-12 col-sm-12 col-md-4 text-center center-block" style="text-align: center;">
-            {% embed "@App/default/includes/grid.html.twig" %}
+        <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+            {% embed "@App/printer/includes/grid.html.twig" %}
                 {% block title %}Top{% endblock %}
                 {% block cell %}
                 <div data-ng-class="classMap( projectors.top, {{ x }},{{ y }})"
@@ -23,15 +23,15 @@ the bottom and working your way up. Good luck!{% endblock %}
             </div>
 
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 hidden-xs">
-            {% embed "@App/default/includes/grid.html.twig" %}
+        <div class="col-sm-6 col-md-4 text-center hidden-xs">
+            {% embed "@App/printer/includes/grid.html.twig" %}
                 {% block title %}Front{% endblock %}
                 {% block cell %}
                 <div data-ng-class="classMap( projectors.front, {{ x }},{{ 10-y }})"></div>{% endblock %}
             {% endembed %}
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 hidden-xs">
-            {% embed "@App/default/includes/grid.html.twig" %}
+        <div class="col-sm-6 col-md-4 text-center hidden-xs">
+            {% embed "@App/printer/includes/grid.html.twig" %}
                 {% block title %}Left{% endblock %}
                 {% block cell %}
                 <div data-ng-class="classMap( projectors.left, {{ x }},{{ 10-y }})"></div>{% endblock %}
