@@ -1,0 +1,6 @@
+build
+tests
+var
+composer.*
+phpunit*
+README.md
