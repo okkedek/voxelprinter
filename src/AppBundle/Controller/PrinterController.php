@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Image;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Printer;
 use AppBundle\Repository\PrinterRepository;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Class PrinterController
  *
- * @Route("/printer", service="app.printer_controller")
+ * @Route("/printer", service="controller.printer")
  */
 class PrinterController extends Controller
 {
@@ -137,6 +138,37 @@ class PrinterController extends Controller
                 UrlGeneratorInterface::ABSOLUTE_URL
             )
         ]);
+    }
+
+    /**
+     * @Route("/snapshot", name="printer_snapshot")
+     */
+    public function postSnapshotAction(Request $request)
+    {
+        $imgBase64 = $request->get('img');
+
+        $image = new Image();
+        $image->setTs(time());
+        $image->setData($imgBase64);
+
+        $repository = $this->get('repository.images');
+        $repository->add($image);
+
+        return $this->snapshotsAction();
+    }
+
+    /**
+     * @Route("/snapshots", name="printer_snapshots")
+     */
+    public function snapshotsAction()
+    {
+        $repository = $this->get('repository.images');
+        $images = $repository->findBy([],['ts' => -1],6);
+
+        return new JsonResponse([
+                'images' => $images
+            ]
+        );
     }
 
     /**

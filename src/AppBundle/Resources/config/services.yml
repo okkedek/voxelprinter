@@ -1,6 +1,8 @@
-services:
+parameters:
+    entity.image: "AppBundle:Image"
 
-  app.printer_controller:
+services:
+  controller.printer:
     class: AppBundle\Controller\PrinterController
     arguments: ["@repository.printer"]
     calls:
@@ -9,4 +11,13 @@ services:
   repository.printer:
     class: AppBundle\Repository\PrinterRepository
     arguments: ["@session"]
+
+  repository.images:
+    class: AppBundle\Repository\ImageRepository
+    factory: ["@doctrine_mongodb", getRepository]
+    arguments:
+      - %entity.image%
+
+
+
 

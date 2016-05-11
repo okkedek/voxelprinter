@@ -24,7 +24,8 @@ class VoxelModel
         $this->voxels[$index] = $voxel;
     }
 
-    public function getVoxels() {
+    public function getVoxels()
+    {
         return array_values($this->voxels);
     }
 }

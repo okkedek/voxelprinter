@@ -50,6 +50,23 @@ printer.service('printerService', function ($http, URL_PREFIX) {
         });
     };
 
+    this.postSnapshot = function (data) {
+        return $http({
+            method: "POST",
+            url: URL_PREFIX + "/snapshot",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: $.param({img: data}),
+        });
+
+    };
+
+    this.loadSnapshots = function() {
+        return $http({
+            method: 'GET',
+            url: URL_PREFIX + '/snapshots'
+        });
+    }
+
     this.nextLayer = function () {
         return $http({
             method: "POST",
@@ -99,12 +116,37 @@ printer.directive('keyboardShortcuts', ['$document', function ($document) {
     };
 }]);
 
-printer.controller('printerController', function ($scope, printerService) {
+printer.controller('printerController', function ($scope, $route, printerService) {
     $scope.init = function () {
         printerService.loadVoxelModel().then(function () {
             $scope.projectors = printerService.projectors;
         });
+        printerService.loadSnapshots().then(function(data) {
+            $scope.updateSnapshots(data);
+        });
+
+        window.onmessage = function (e) {
+            if ((e.origin == "http://www.viewstl.com") && (e.data.msg_type)) {
+                if (e.data.msg_type == 'photo') {
+                    printerService.postSnapshot(e.data.img_data).then(function(data) {
+                        $scope.updateSnapshots(data);
+                    });
+                }
+            }
+        };
     };
+
+    $scope.updateSnapshots = function(data) {
+        var images = data.data.images;
+        for (var i = 0; i < images.length; i++) {
+            console.log(i);
+            $(".img-responsive").eq(i).attr("src" , images[i].data);
+        }
+    }
+
+    $scope.uploadSnapshot = function (imgData) {
+        console.log(imgData);
+    }
 
     $scope.add = function (x, y) {
         printerService.addVoxel(x, y);
@@ -122,7 +164,11 @@ printer.controller('printerController', function ($scope, printerService) {
         printerService.clear();
     };
 
-    $scope.classMap = function(projector, x, y) {
+    $scope.snapshot = function () {
+        document.getElementById('vs_iframe').contentWindow.postMessage({msg_type: 'get_photo'}, '*');
+    }
+
+    $scope.classMap = function (projector, x, y) {
         if (projector == undefined) return [];
         var classes = [];
         var value = projector.valueAt(x, y);
