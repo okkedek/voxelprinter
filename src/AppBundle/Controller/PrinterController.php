@@ -61,7 +61,7 @@ class PrinterController extends Controller
      */
     public function loadAction()
     {
-        $printer = $this->printerRepository->loadPrinter();
+        $printer = $this->printerRepository->load();
 
         return $this->renderResponse($printer);
     }
@@ -77,9 +77,9 @@ class PrinterController extends Controller
     public function moveAction(Request $request)
     {
         list($x, $y) = $request->get('coord');
-        $printer = $this->printerRepository->loadPrinter();
+        $printer = $this->printerRepository->load();
         $printer->moveNozzle($x, $y);
-        $this->printerRepository->savePrinter($printer);
+        $this->printerRepository->save($printer);
 
         return $this->renderResponse($printer);
     }
@@ -95,7 +95,7 @@ class PrinterController extends Controller
     public function commandAction(Request $request)
     {
         $command = $request->get('command');
-        $printer = $this->printerRepository->loadPrinter();
+        $printer = $this->printerRepository->load();
 
         switch ($command) {
             case 'nextLayer':
@@ -111,7 +111,7 @@ class PrinterController extends Controller
                 throw new \Exception("Unkown command: " . $command);
         }
 
-        $this->printerRepository->savePrinter($printer);
+        $this->printerRepository->save($printer);
 
         return $this->renderResponse($printer);
     }
@@ -132,7 +132,7 @@ class PrinterController extends Controller
         $session->save(); // closes the current session
         $session->setId(explode(".", $sid)[0]);
 
-        $printer = $this->printerRepository->loadPrinter();
+        $printer = $this->printerRepository->load();
 
         $response = $this->render('@App/printer/voxelmodel.stl.twig', [
             'voxels' => $printer->getVoxelModel()->getVoxels()

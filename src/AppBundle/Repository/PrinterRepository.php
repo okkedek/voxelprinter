@@ -19,7 +19,7 @@ class PrinterRepository
     /**
      * @return Printer
      */
-    public function loadPrinter()
+    public function load()
     {
         $printer = $this->session->get(self::$SESSION_KEY);
 
@@ -35,7 +35,7 @@ class PrinterRepository
      *
      * @param $printer Printer
      */
-    public function savePrinter($printer)
+    public function save($printer)
     {
         $this->session->set(self::$SESSION_KEY , $printer);
     }
