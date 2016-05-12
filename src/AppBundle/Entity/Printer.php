@@ -66,7 +66,9 @@ class Printer
 
     public function nextLayer()
     {
-        $this->layer++;
+        if ($this->layer < 10) {
+            $this->layer++;
+        }
     }
 
     public function clear()
