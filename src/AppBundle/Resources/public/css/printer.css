@@ -1,0 +1,59 @@
+.margin-8 {
+    margin: 0 8px 8px 0;
+}
+
+.voxel-grid-container {
+    display: table;
+    border-collapse: collapse;
+}
+
+.voxel-grid-container h2 {
+    display: table-caption;
+}
+
+.voxel-grid-container div {
+    display: table-row;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+.voxel-grid-container div div {
+    display: table-cell;
+    border: 1px solid;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+}
+
+.voxel-grid-container div div:hover {
+    background-color: #2e6da4;
+}
+
+.voxel.current {
+    background-color: darkred;
+}
+
+.voxel.previous {
+    background-color: #664444;
+}
+
+.voxel {
+    background-color: grey;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.clearfix:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.visit {
+    background-color: lightcoral;
+}

@@ -134,19 +134,16 @@ printer.controller('printerController', function ($scope, $route, printerService
                 }
             }
         };
+
+        $(".voxel-grid-container:first").on("mouseenter", "div div", function() {
+            var el = $(this);
+            el.addClass("visit");
+            setTimeout(function() {
+                el.removeClass("visit");
+            },2000);
+        });
     };
 
-    $scope.updateSnapshots = function(data) {
-        var images = data.data.images;
-        for (var i = 0; i < images.length; i++) {
-            console.log(i);
-            $(".img-responsive").eq(i).attr("src" , images[i].data);
-        }
-    }
-
-    $scope.uploadSnapshot = function (imgData) {
-        console.log(imgData);
-    }
 
     $scope.add = function (x, y) {
         printerService.addVoxel(x, y);
@@ -166,6 +163,13 @@ printer.controller('printerController', function ($scope, $route, printerService
 
     $scope.snapshot = function () {
         document.getElementById('vs_iframe').contentWindow.postMessage({msg_type: 'get_photo'}, '*');
+    }
+
+    $scope.updateSnapshots = function(data) {
+        var images = data.data.images;
+        for (var i = 0; i < images.length; i++) {
+            $(".img-responsive").eq(i).attr("src" , images[i].data);
+        }
     }
 
     $scope.classMap = function (projector, x, y) {
