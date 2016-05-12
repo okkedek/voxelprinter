@@ -76,6 +76,10 @@ aside {
     padding: 0;
 }
 
+.right-space {
+    margin-right: 8px;
+}
+
 .navbar-default {
     border-color: rgba(34,34,34,.05);
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
