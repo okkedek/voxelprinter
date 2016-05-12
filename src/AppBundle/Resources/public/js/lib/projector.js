@@ -48,7 +48,7 @@ function Projector(voxels, vector) {
     this.valueAt = function (x, y) {
 
         return (projection[x] != undefined && projection[x][y] != undefined ? projection[x][y] : undefined);
-    }
+    };
 
     /**
      * Determines the distance of the original voxel to the projection screen

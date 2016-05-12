@@ -26,6 +26,8 @@ class SnapshotController extends Controller
      * Adds a snapshot image to the creation gallery
      *
      * @Route("/add", name="snapshot_add")
+     * @param Request $request
+     * @return JsonResponse
      */
     public function addAction(Request $request)
     {

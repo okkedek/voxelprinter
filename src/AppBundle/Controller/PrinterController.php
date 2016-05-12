@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Image;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Printer;
 use AppBundle\Repository\PrinterRepository;
@@ -92,6 +91,9 @@ class PrinterController extends Controller
      * Handles command
      *
      * @Route("/command", name="printer_command")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function commandAction(Request $request)
     {

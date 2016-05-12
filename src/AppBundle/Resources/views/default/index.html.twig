@@ -127,9 +127,9 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid" ng-controller="snapshotController">
+        <div class="container-fluid" data-ng-controller="snapshotController">
             <div class="row no-gutter">
-                <div class="col-lg-4 col-sm-6" ng-repeat="snapshot in snapshots">
+                <div class="col-lg-4 col-sm-6" data-ng-repeat="snapshot in snapshots">
                     <img data-ng-src="{% raw %}{{ snapshot.data }}{% endraw %}" class="img-responsive" alt="">
                 </div>
             </div>

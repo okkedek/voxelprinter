@@ -8,7 +8,7 @@ angular.module('voxelprinter')
                 method: "POST",
                 url: PREFIX_SNAPSHOT + "/add",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                data: $.param({img: data}),
+                data: $.param({img: data})
             });
         };
 
@@ -43,6 +43,7 @@ angular.module('voxelprinter')
 
         function updateSnapshots(data) {
             $scope.snapshots = data.data.images;
-        };
+        }
+
         $scope.init();
     });

@@ -52,7 +52,7 @@ class Image
     /**
      * Get id
      *
-     * @return id $id
+     * @return int $id
      */
     public function getId()
     {
@@ -74,7 +74,7 @@ class Image
     /**
      * Get ts
      *
-     * @return timestamp $ts
+     * @return int $ts
      */
     public function getTs()
     {

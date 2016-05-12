@@ -19,7 +19,7 @@ angular.module('voxelprinter')
                 method: "POST",
                 url: PREFIX_PRINTER + "/move",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                data: $.param({coord: [x, y]}),
+                data: $.param({coord: [x, y]})
             }).then(function (response) {
                 updateVoxelModel(response.data);
             });
@@ -30,7 +30,7 @@ angular.module('voxelprinter')
                 method: "POST",
                 url: PREFIX_PRINTER + "/command",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                data: $.param({command: command}),
+                data: $.param({command: command})
             }).then(function (response) {
                 updateVoxelModel(response.data);
             });
@@ -51,7 +51,7 @@ angular.module('voxelprinter')
                 $document.bind('keydown', function (event) {
                     $scope.keypress(event.which);
                 });
-                $scope.$on('$destroy', function (event) {
+                $scope.$on('$destroy', function () {
                     $document.unbind('keydown');
                 });
             }
