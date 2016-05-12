@@ -14,6 +14,11 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 class ImageRepository extends DocumentRepository
 {
 
+    /**
+     * Adds an image to the gallery
+     *
+     * @param Image $image
+     */
     public function add(Image $image) {
         $this->dm->persist($image);
         $this->dm->flush();

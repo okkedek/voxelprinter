@@ -28,6 +28,8 @@ class PrinterController extends Controller
     }
 
     /**
+     * Angular view: the printer view with the three grids
+     *
      * @Route("/grid", name="printer_grid")
      */
     public function gridAction()
@@ -40,6 +42,25 @@ class PrinterController extends Controller
     }
 
     /**
+     * Angular view: the 3d result view
+     *
+     * @Route("/result", name="printer_result")
+     */
+    public function resultAction()
+    {
+        return $this->render('@App/printer/viewer.html.twig', [
+            'model_url' => $this->generateUrl(
+                'printer_stlmodel',
+                ['sid' => $this->get('session')->getId()],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            )
+        ]);
+    }
+
+
+    /**
+     * Returns the current voxel model
+     *
      * @Route("/load", name="printer_load")
      */
     public function loadAction()
@@ -50,6 +71,8 @@ class PrinterController extends Controller
     }
 
     /**
+     * Moves the nozzle, possible adding a voxel
+     *
      * @Route("/move", name="printer_move")
      * @param Request $request
      *
@@ -66,6 +89,8 @@ class PrinterController extends Controller
     }
 
     /**
+     * Moves the nozzle to the next layer
+     *
      * @Route("/next", name="printer_next_layer")
      */
     public function nextLayerAction()
@@ -78,6 +103,8 @@ class PrinterController extends Controller
     }
 
     /**
+     * Toggles the nozzle open/close state
+     *
      * @Route("/nozzle", name="printer_toggle_nozzle")
      */
     public function toggleNozzleAction()
@@ -90,6 +117,8 @@ class PrinterController extends Controller
     }
 
     /**
+     * Clears the current voxelmodel
+     *
      * @Route("/clear", name="printer_clear")
      */
     public function clearAction()
@@ -102,7 +131,7 @@ class PrinterController extends Controller
     }
 
     /**
-     * Used by external STL viewer to load the STl model
+     * Used by external STL viewer to load the STL view of the current voxelmodel
      *
      * @Route("/model/{sid}.stl", name="printer_stlmodel")
      * @param $sid
@@ -127,20 +156,8 @@ class PrinterController extends Controller
     }
 
     /**
-     * @Route("/result", name="printer_result")
-     */
-    public function resultAction()
-    {
-        return $this->render('@App/printer/viewer.html.twig', [
-            'model_url' => $this->generateUrl(
-                'printer_stlmodel',
-                ['sid' => $this->get('session')->getId()],
-                UrlGeneratorInterface::ABSOLUTE_URL
-            )
-        ]);
-    }
-
-    /**
+     * Adds a snapshot image to the creation gallery
+     *
      * @Route("/snapshot", name="printer_snapshot")
      */
     public function postSnapshotAction(Request $request)
@@ -158,6 +175,8 @@ class PrinterController extends Controller
     }
 
     /**
+     * Returns all snapshots in the creation gallery
+     *
      * @Route("/snapshots", name="printer_snapshots")
      */
     public function snapshotsAction()

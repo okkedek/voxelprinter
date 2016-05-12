@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
+ * A snapshot image
  *
  * @MongoDB\Document(repositoryClass="AppBundle\Repository\ImageRepository")
  */
@@ -61,7 +62,7 @@ class Image
     /**
      * Set ts
      *
-     * @param timestamp $ts
+     * @param int $ts
      * @return self
      */
     public function setTs($ts)

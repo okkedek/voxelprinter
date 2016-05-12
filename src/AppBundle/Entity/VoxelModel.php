@@ -5,8 +5,6 @@ namespace AppBundle\Entity;
 
 /**
  * Represents a 3D model consisting of Voxels
- *
- * @package AppBundle\Entity
  */
 
 class VoxelModel

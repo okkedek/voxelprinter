@@ -1,10 +1,5 @@
 /**
- *
  * Angular voxel printer module
- *
- * (c) 2016 Okke De Koninck
- * i-Help Networks
- * www.ihelp.nl
  *
  */
 var printer = angular.module('printer', ['ngRoute']);
@@ -25,7 +20,6 @@ printer.config(function ($routeProvider, URL_PREFIX) {
 });
 
 printer.service('printerService', function ($http, URL_PREFIX) {
-
     var self = this;
     this.projectors = {};
     this.currentLayer = 0;
@@ -57,7 +51,6 @@ printer.service('printerService', function ($http, URL_PREFIX) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             data: $.param({img: data}),
         });
-
     };
 
     this.loadSnapshots = function() {
@@ -118,13 +111,15 @@ printer.directive('keyboardShortcuts', ['$document', function ($document) {
 
 printer.controller('printerController', function ($scope, $route, printerService) {
     $scope.init = function () {
+        // load voxelmodel
         printerService.loadVoxelModel().then(function () {
             $scope.projectors = printerService.projectors;
         });
+        // load snapshots
         printerService.loadSnapshots().then(function(data) {
             $scope.updateSnapshots(data);
         });
-
+        // install handler for incoming snapshots sent by viewstl.com
         window.onmessage = function (e) {
             if ((e.origin == "http://www.viewstl.com") && (e.data.msg_type)) {
                 if (e.data.msg_type == 'photo') {
@@ -134,7 +129,7 @@ printer.controller('printerController', function ($scope, $route, printerService
                 }
             }
         };
-
+        //
         $(".voxel-grid-container:first").on("mouseenter", "div div", function() {
             var el = $(this);
             el.addClass("visit");
@@ -143,7 +138,6 @@ printer.controller('printerController', function ($scope, $route, printerService
             },2000);
         });
     };
-
 
     $scope.add = function (x, y) {
         printerService.addVoxel(x, y);
@@ -179,7 +173,7 @@ printer.controller('printerController', function ($scope, $route, printerService
         if (value != undefined) {
             classes.push("voxel");
         }
-        var distance = printerService.currentLayer - projector.layerOf(x, y);
+        var distance = printerService.currentLayer - projector.distanceOf(x, y);
         if (distance == 0) {
             classes.push("current");
         } else if (distance == 1) {

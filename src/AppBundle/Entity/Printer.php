@@ -3,7 +3,11 @@
 
 namespace AppBundle\Entity;
 
-
+/**
+ * Printer
+ *
+ * @package AppBundle\Entity
+ */
 class Printer
 {
     /**
@@ -59,11 +63,17 @@ class Printer
         return $this->model;
     }
 
+    /**
+     * @return int
+     */
     public function getCurrentLayer()
     {
         return $this->layer;
     }
 
+    /**
+     * Moves nozzle to next layer
+     */
     public function nextLayer()
     {
         if ($this->layer < 10) {
@@ -71,12 +81,18 @@ class Printer
         }
     }
 
+    /**
+     * Clear current model
+     */
     public function clear()
     {
         $this->model = new VoxelModel();
         $this->layer = 0;
     }
 
+    /**
+     * Open/close the nozzle
+     */
     public function toggleNozzle()
     {
         $this->nozzleOpen = !$this->nozzleOpen;
