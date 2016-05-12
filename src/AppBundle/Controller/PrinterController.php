@@ -30,9 +30,9 @@ class PrinterController extends Controller
     /**
      * Angular view: the printer view with the three grids
      *
-     * @Route("/grid", name="printer_grid")
+     * @Route("/view/grid", name="printer_grid")
      */
-    public function gridAction()
+    public function gridViewAction()
     {
         $viewModel = [
             'width' => 10,
@@ -44,9 +44,9 @@ class PrinterController extends Controller
     /**
      * Angular view: the 3d result view
      *
-     * @Route("/result", name="printer_result")
+     * @Route("/view/result", name="printer_result")
      */
-    public function resultAction()
+    public function resultViewAction()
     {
         return $this->render('@App/printer/viewer.html.twig', [
             'model_url' => $this->generateUrl(
@@ -137,41 +137,6 @@ class PrinterController extends Controller
         ]);
 
         return $response;
-    }
-
-    /**
-     * Adds a snapshot image to the creation gallery
-     *
-     * @Route("/snapshot", name="printer_snapshot")
-     */
-    public function addSnapshotAction(Request $request)
-    {
-        $imgBase64 = $request->get('img');
-
-        $image = new Image();
-        $image->setTs(time());
-        $image->setData($imgBase64);
-
-        $repository = $this->get('repository.images');
-        $repository->add($image);
-
-        return $this->snapshotsAction();
-    }
-
-    /**
-     * Returns all snapshots in the creation gallery
-     *
-     * @Route("/snapshots", name="printer_snapshots")
-     */
-    public function snapshotsAction()
-    {
-        $repository = $this->get('repository.images');
-        $images = $repository->findBy([],['ts' => -1],6);
-
-        return new JsonResponse([
-                'images' => $images
-            ]
-        );
     }
 
     /**

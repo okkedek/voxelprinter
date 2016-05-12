@@ -127,27 +127,10 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" ng-controller="snapshotController">
             <div class="row no-gutter">
-                <div class="col-lg-4 col-sm-6">
-                    {#<a href="#" target="_self" class="portfolio-box">#}
-                        <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
-                    {#</a>#}
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <img src="{{ asset('bundles/app/img/portfolio/2.jpg') }}" class="img-responsive" alt="">
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <img src="{{ asset('bundles/app/img/portfolio/1.jpg') }}" class="img-responsive" alt="">
+                <div class="col-lg-4 col-sm-6" ng-repeat="snapshot in snapshots">
+                    <img data-ng-src="{% raw %}{{ snapshot.data }}{% endraw %}" class="img-responsive" alt="">
                 </div>
             </div>
         </div>

@@ -8,6 +8,13 @@ services:
     calls:
       - [ setContainer, ["@service_container"] ]
 
+  controller.snapshot:
+    class: AppBundle\Controller\SnapshotController
+    arguments: ["@repository.images"]
+    calls:
+      - [ setContainer, ["@service_container"] ]
+
+
   repository.printer:
     class: AppBundle\Repository\PrinterRepository
     arguments: ["@session"]

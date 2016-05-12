@@ -1,9 +1,10 @@
 app:
   resource: "@AppBundle/Controller/DefaultController.php"
   type:     annotation
-  prefix:   /
 printer:
   resource: "@AppBundle/Controller/PrinterController.php"
   type:     annotation
-  prefix:   /
+snapshot:
+  resource: "@AppBundle/Controller/SnapshotController.php"
+  type:     annotation
 

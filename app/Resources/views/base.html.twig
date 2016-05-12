@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="printer">
+<html data-ng-app="voxelprinter">
 <head>
     <meta charset="UTF-8"/>
     <title>{% block title %}Voxelprinter demo app{% endblock %}</title>
@@ -36,8 +36,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.min.js"></script>
 
     <!-- application -->
-    <script src="{{ asset('bundles/app/js/app/theme.js') }}"></script>
-    <script src="{{ asset('bundles/app/js/app/printer.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/theme.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/app/voxelprinter.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/app/voxelprinter/printer.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/app/voxelprinter/snapshot.js') }}"></script>
     <script src="{{ asset('bundles/app/js/lib/projector.js') }}"></script>
 
     {% block javascripts %}{% endblock %}
