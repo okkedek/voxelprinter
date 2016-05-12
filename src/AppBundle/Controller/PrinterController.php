@@ -12,8 +12,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 /**
- * Class PrinterController
- *
  * @Route("/printer", service="controller.printer")
  */
 class PrinterController extends Controller
@@ -55,7 +53,6 @@ class PrinterController extends Controller
             )
         ]);
     }
-
 
     /**
      * Returns the current voxel model

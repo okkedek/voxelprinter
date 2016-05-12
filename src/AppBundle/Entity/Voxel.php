@@ -4,7 +4,7 @@
 namespace AppBundle\Entity;
 
 /**
- * Represents a single voxel in a 3d model (value entity)
+ * A voxel in a 3d voxel model
  */
 class Voxel
 {

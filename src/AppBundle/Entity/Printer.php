@@ -4,7 +4,8 @@
 namespace AppBundle\Entity;
 
 /**
- * Printer
+ * A 3D Printer with a nozzle that opens and closes
+ * Prints a Voxelmodel
  *
  * @package AppBundle\Entity
  */

@@ -4,9 +4,8 @@
 namespace AppBundle\Entity;
 
 /**
- * Represents a 3D model consisting of Voxels
+ * A 3D model consisting of Voxels
  */
-
 class VoxelModel
 {
     protected $voxels = [];
@@ -16,12 +15,18 @@ class VoxelModel
         return count($this->voxels);
     }
 
+    /**
+     * @param Voxel $voxel
+     */
     public function add(Voxel $voxel)
     {
         $index = join( "," , $voxel->toArray());
         $this->voxels[$index] = $voxel;
     }
 
+    /**
+     * @return Voxel[]
+     */
     public function getVoxels()
     {
         return array_values($this->voxels);

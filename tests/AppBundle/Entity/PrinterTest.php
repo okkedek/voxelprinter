@@ -1,8 +1,7 @@
 <?php
 
-namespace AppBundle\Service;
+namespace AppBundle\Entity;
 
-use AppBundle\Entity\Printer;
 use PHPUnit_Framework_TestCase;
 
 class PrinterTest extends PHPUnit_Framework_TestCase
