@@ -6,8 +6,17 @@
                 <hr class="primary">
                 <p class="text-faded">{% block description %}{% endblock %}</p>
             </div>
+
         </div>
         {% block content %}{% endblock %}
+        <div class="row">
+            <div class="call-to-action col-sm-12 text-center">
+                <p>
+                    <br>
+                    <a href="#creations" target="_self" class="btn btn-primary btn-xl page-scroll">Show the creations</a>
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 {% block stylesheets %}{% endblock %}

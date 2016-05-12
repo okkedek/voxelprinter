@@ -89,42 +89,26 @@ class PrinterController extends Controller
     }
 
     /**
-     * Moves the nozzle to the next layer
+     * Handles command
      *
-     * @Route("/next", name="printer_next_layer")
+     * @Route("/command", name="printer_command")
      */
-    public function nextLayerAction()
+    public function commandAction(Request $request)
     {
+        $command = $request->get('command');
         $printer = $this->printerRepository->loadPrinter();
-        $printer->nextLayer();
-        $this->printerRepository->savePrinter($printer);
 
-        return $this->renderResponse($printer);
-    }
+        switch ($command) {
+            case 'nextLayer':
+                $printer->nextLayer(); break;
+            case 'toggleNozzle':
+                $printer->toggleNozzle(); break;
+            case 'clear':
+                $printer->clear(); break;
+            default:
+                throw new \Exception("Unkown command: " . $command);
+        }
 
-    /**
-     * Toggles the nozzle open/close state
-     *
-     * @Route("/nozzle", name="printer_toggle_nozzle")
-     */
-    public function toggleNozzleAction()
-    {
-        $printer = $this->printerRepository->loadPrinter();
-        $printer->toggleNozzle();
-        $this->printerRepository->savePrinter($printer);
-
-        return $this->renderResponse($printer);
-    }
-
-    /**
-     * Clears the current voxelmodel
-     *
-     * @Route("/clear", name="printer_clear")
-     */
-    public function clearAction()
-    {
-        $printer = $this->printerRepository->loadPrinter();
-        $printer->clear();
         $this->printerRepository->savePrinter($printer);
 
         return $this->renderResponse($printer);
@@ -138,7 +122,7 @@ class PrinterController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function resultModelAction($sid)
+    public function loadStlAction($sid)
     {
         // we have to use the session id from the url
         // in order to load the correct model
@@ -160,7 +144,7 @@ class PrinterController extends Controller
      *
      * @Route("/snapshot", name="printer_snapshot")
      */
-    public function postSnapshotAction(Request $request)
+    public function addSnapshotAction(Request $request)
     {
         $imgBase64 = $request->get('img');
 

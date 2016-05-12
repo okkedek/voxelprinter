@@ -44,7 +44,7 @@ printer.service('printerService', function ($http, URL_PREFIX) {
         });
     };
 
-    this.postSnapshot = function (data) {
+    this.addSnapshot = function (data) {
         return $http({
             method: "POST",
             url: URL_PREFIX + "/snapshot",
@@ -60,28 +60,12 @@ printer.service('printerService', function ($http, URL_PREFIX) {
         });
     }
 
-    this.nextLayer = function () {
+    this.sendCommand = function (command) {
         return $http({
             method: "POST",
-            url: URL_PREFIX + "/next"
-        }).then(function (response) {
-            updateVoxelModel(response.data);
-        });
-    };
-
-    this.toggleNozzle = function () {
-        return $http({
-            method: "POST",
-            url: URL_PREFIX + "/nozzle"
-        }).then(function (response) {
-            updateVoxelModel(response.data);
-        });
-    };
-
-    this.clear = function () {
-        return $http({
-            method: "POST",
-            url: URL_PREFIX + "/clear"
+            url: URL_PREFIX + "/command",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: $.param({command : command}),
         }).then(function (response) {
             updateVoxelModel(response.data);
         });
@@ -123,7 +107,7 @@ printer.controller('printerController', function ($scope, $route, printerService
         window.onmessage = function (e) {
             if ((e.origin == "http://www.viewstl.com") && (e.data.msg_type)) {
                 if (e.data.msg_type == 'photo') {
-                    printerService.postSnapshot(e.data.img_data).then(function(data) {
+                    printerService.addSnapshot(e.data.img_data).then(function(data) {
                         $scope.updateSnapshots(data);
                     });
                 }
@@ -144,15 +128,15 @@ printer.controller('printerController', function ($scope, $route, printerService
     };
 
     $scope.next = function () {
-        printerService.nextLayer();
+        printerService.sendCommand('nextLayer');
     };
 
     $scope.nozzle = function () {
-        printerService.toggleNozzle();
+        printerService.sendCommand('toggleNozzle');
     };
 
     $scope.clear = function () {
-        printerService.clear();
+        printerService.sendCommand('clear');
     };
 
     $scope.snapshot = function () {
@@ -185,13 +169,13 @@ printer.controller('printerController', function ($scope, $route, printerService
     $scope.keypress = function (keycode) {
         switch (keycode) {
             case 76: //l
-                printerService.nextLayer();
+                printerService.sendCommand('nextLayer');
                 break;
             case 67: //c
-                printerService.clear();
+                printerService.sendCommand('clear');
                 break;
             case 78: //n
-                printerService.toggleNozzle();
+                printerService.sendCommand('toggleNozzle');
                 break;
         }
     };
