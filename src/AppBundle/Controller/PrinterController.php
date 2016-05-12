@@ -102,11 +102,14 @@ class PrinterController extends Controller
 
         switch ($command) {
             case 'nextLayer':
-                $printer->nextLayer(); break;
+                $printer->nextLayer();
+                break;
             case 'toggleNozzle':
-                $printer->toggleNozzle(); break;
+                $printer->toggleNozzle();
+                break;
             case 'clear':
-                $printer->clear(); break;
+                $printer->clear();
+                break;
             default:
                 throw new \Exception("Unkown command: " . $command);
         }
