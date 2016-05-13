@@ -1,4 +1,4 @@
 voxel_printer
 =============
 
-See the wiki for more information
+See the <a href="wiki">wiki</a> for more information
