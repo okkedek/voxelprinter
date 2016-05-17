@@ -1,8 +1,6 @@
 angular.module('voxelprinter')
-    .constant('PREFIX_SNAPSHOT', '/snapshot')
 
     .service('snapshotService', function ($http, PREFIX_SNAPSHOT) {
-
         this.add = function (data) {
             return $http({
                 method: "POST",
@@ -11,7 +9,6 @@ angular.module('voxelprinter')
                 data: $.param({img: data})
             });
         };
-
         this.load = function () {
             return $http({
                 method: 'GET',
@@ -21,9 +18,7 @@ angular.module('voxelprinter')
     })
 
     .controller('snapshotController', function ($scope, $route, snapshotService) {
-
         $scope.snapshots = [];
-
         $scope.init = function () {
             // load snapshots
             snapshotService.load().then(function (data) {
@@ -40,10 +35,8 @@ angular.module('voxelprinter')
                 }
             };
         };
-
         function updateSnapshots(data) {
             $scope.snapshots = data.data.images;
         }
-
         $scope.init();
     });

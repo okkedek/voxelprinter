@@ -6,7 +6,7 @@
 {% block content %}
     <div class="row clearfix" data-keyboard-shortcuts>
         {% spaceless %}
-        <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+        <div class="col-xs-12 col-sm-12 col-md-4 text-center top-view">
             {% embed "@App/printer/includes/grid.html.twig" %}
                 {% block title %}Top{% endblock %}
                 {% block cell %}
@@ -15,9 +15,11 @@
             {% endembed %}
             <div class="clearfix">
                 <br>
-                <button class="btn btn-primary margin-8" data-ng-click="clear()">clear (c)</button>
-                <button class="btn btn-success margin-8" data-ng-click="nozzle()">toggle nozzle (n)</button>
+                <button class="btn btn-success margin-8" data-ng-click="nozzle()">
+                    nozzle={% raw %}{{ nozzleState() }}{% endraw %} (n)
+                </button>
                 <button class="btn btn-success margin-8" data-ng-click="next()">next layer (l)</button>
+                <button class="btn btn-primary margin-8" data-ng-click="clear()">clear (c)</button>
                 <a class="btn btn-info margin-8" href="#result">Show Result</a>
                 <br>
             </div>
@@ -27,14 +29,14 @@
             {% embed "@App/printer/includes/grid.html.twig" %}
                 {% block title %}Front{% endblock %}
                 {% block cell %}
-                <div data-ng-class="classMap( projectors.front, {{ x }},{{ 10-y }})"></div>{% endblock %}
+                <div data-ng-class="classMap( projectors.front, {{ x }},{{ width-y-1 }})"></div>{% endblock %}
             {% endembed %}
         </div>
         <div class="col-sm-6 col-md-4 text-center hidden-xs">
             {% embed "@App/printer/includes/grid.html.twig" %}
                 {% block title %}Left{% endblock %}
                 {% block cell %}
-                <div data-ng-class="classMap( projectors.left, {{ x }},{{ 10-y }})"></div>{% endblock %}
+                <div data-ng-class="classMap( projectors.left, {{ x }},{{ width-y-1 }})"></div>{% endblock %}
             {% endembed %}
 
             {% endspaceless %}

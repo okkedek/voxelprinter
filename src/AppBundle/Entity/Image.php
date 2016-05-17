@@ -20,7 +20,7 @@ class Image
     /**
      * @MongoDB\Timestamp
      */
-    private $ts;
+    private $timestamp;
 
     /**
      * @MongoDB\String
@@ -62,22 +62,22 @@ class Image
     /**
      * Set ts
      *
-     * @param int $ts
+     * @param int $timestamp
      * @return self
      */
-    public function setTs($ts)
+    public function setTimestamp($timestamp)
     {
-        $this->ts = $ts;
+        $this->timestamp = $timestamp;
         return $this;
     }
 
     /**
      * Get ts
      *
-     * @return int $ts
+     * @return int
      */
-    public function getTs()
+    public function getTimestamp()
     {
-        return $this->ts;
+        return $this->timestamp;
     }
 }

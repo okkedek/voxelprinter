@@ -1,8 +1,8 @@
 <div class="voxel-grid-container center-block">
     <h2>{% block title %}{% endblock %}</h2>
-    {% for y in 0 .. height %}
+    {% for y in 0 .. height-1 %}
         <div>
-            {% for x in 0 .. width %}
+            {% for x in 0 .. width-1 %}
                 {% block cell %}{% endblock %}
             {% endfor %}
         </div>

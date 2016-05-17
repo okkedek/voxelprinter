@@ -54,6 +54,8 @@
     clear: both;
 }
 
-.visit, .voxel.visit, previous.visit  {
+.top-view .visit,
+.top-view .voxel.visit,
+.top-view previous.visit  {
     background-color: lightcoral;
 }

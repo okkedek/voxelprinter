@@ -19,9 +19,11 @@ class ImageRepository extends DocumentRepository
      *
      * @param Image $image
      */
-    public function add(Image $image) {
-        $this->dm->persist($image);
-        $this->dm->flush();
+    public function add(Image $image)
+    {
+        $documentManager = $this->getDocumentManager();
+        $documentManager->persist($image);
+        $documentManager->flush();
     }
 
 }

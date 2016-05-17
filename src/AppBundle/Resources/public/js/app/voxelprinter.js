@@ -3,7 +3,8 @@
  *
  */
 angular.module('voxelprinter', ['ngRoute'])
-    .constant('PREFIX_PRINTER', '/printer')
+    .constant('PREFIX_PRINTER' , '/printer')
+    .constant('PREFIX_SNAPSHOT', '/snapshot')
     .config(function ($routeProvider, PREFIX_PRINTER) {
         $routeProvider
             .when('/', {

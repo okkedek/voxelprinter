@@ -3,25 +3,29 @@ angular.module('voxelprinter')
     .service('printerService', function ($http, PREFIX_PRINTER) {
         var self = this;
         this.projectors = {};
+        this.visited = [];
         this.currentLayer = 0;
+        this.nozzleState = "?";
 
         this.loadVoxelModel = function () {
             return $http({
                 method: 'GET',
                 url: PREFIX_PRINTER + '/load'
             }).then(function successCallback(response) {
-                updateVoxelModel(response.data);
+                updatePrinterState(response.data);
             });
         };
 
         this.addVoxel = function (x, y) {
+            this.visit(x, y);
             return $http({
                 method: "POST",
                 url: PREFIX_PRINTER + "/move",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: $.param({coord: [x, y]})
             }).then(function (response) {
-                updateVoxelModel(response.data);
+                self.unVisit.call(self, x, y);
+                updatePrinterState(response.data);
             });
         };
 
@@ -32,15 +36,36 @@ angular.module('voxelprinter')
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: $.param({command: command})
             }).then(function (response) {
-                updateVoxelModel(response.data);
+                updatePrinterState(response.data);
             });
         };
 
-        function updateVoxelModel(voxelModel) {
-            self.currentLayer = voxelModel.currentLayer;
-            self.projectors.top = new Projector(voxelModel.voxels, {x: 0, y: 1, z: 0});
-            self.projectors.front = new Projector(voxelModel.voxels, {x: 0, y: 0, z: 1});
-            self.projectors.left = new Projector(voxelModel.voxels, {x: 1, z: 0, y: 0});
+
+        this.visit = function (x, y) {
+            this.visited[x + "," + y] = true;
+            setTimeout(function () {
+                self.unVisit.call(self, x, y);
+            }, 3000);
+        }
+
+        this.unVisit = function (x, y) {
+            this.visited[x + "," + y] = undefined;
+        }
+
+        this.clearVisited = function () {
+            this.visited = [];
+        }
+
+        this.hasVisited = function (x, y) {
+            return (this.visited[x + "," + y] != undefined);
+        }
+
+        function updatePrinterState(printer) {
+            self.currentLayer = printer.currentLayer;
+            self.nozzleState = printer.nozzleState;
+            self.projectors.top   = new Projector(printer.voxels, {x: 0, y: 1, z: 0});
+            self.projectors.front = new Projector(printer.voxels, {x: 0, y: 0, z: 1});
+            self.projectors.left  = new Projector(printer.voxels, {x: 1, z: 0, y: 0});
         }
     })
 
@@ -59,16 +84,11 @@ angular.module('voxelprinter')
     }])
 
     .controller('printerController', function ($scope, $route, printerService) {
-        $scope.init = function () {
+        $scope.nozzlestate = "open";
+        this.init = function () {
             printerService.loadVoxelModel().then(function () {
                 $scope.projectors = printerService.projectors;
-            });
-            $(".voxel-grid-container:first").on("mouseenter", "div div", function () {
-                var el = $(this);
-                el.addClass("visit");
-                setTimeout(function () {
-                    el.removeClass("visit");
-                }, 2000);
+                $scope.visited = printerService.visited;
             });
         };
 
@@ -77,6 +97,7 @@ angular.module('voxelprinter')
         };
 
         $scope.next = function () {
+            printerService.clearVisited();
             printerService.sendCommand('nextLayer');
         };
 
@@ -84,11 +105,17 @@ angular.module('voxelprinter')
             printerService.sendCommand('toggleNozzle');
         };
 
+        $scope.nozzleState = function() {
+            return printerService.nozzleState ? "open" : "closed";
+        }
+
         $scope.clear = function () {
+            printerService.clearVisited();
             printerService.sendCommand('clear');
         };
 
         $scope.snapshot = function () {
+            // send message to external stlviewer iframe to take a snapshot and return the image
             document.getElementById('vs_iframe').contentWindow.postMessage({msg_type: 'get_photo'}, '*');
         };
 
@@ -105,22 +132,25 @@ angular.module('voxelprinter')
             } else if (distance == 1) {
                 classes.push("previous");
             }
+            if (printerService.hasVisited(x, y)) {
+                classes.push("visit");
+            }
             return classes;
         };
 
         $scope.keypress = function (keycode) {
             switch (keycode) {
                 case 76: //l
-                    printerService.sendCommand('nextLayer');
+                    $scope.next();
                     break;
                 case 67: //c
-                    printerService.sendCommand('clear');
+                    $scope.clear();
                     break;
                 case 78: //n
-                    printerService.sendCommand('toggleNozzle');
+                    $scope.nozzle();
                     break;
             }
         };
 
-        $scope.init();
+        this.init();
     });

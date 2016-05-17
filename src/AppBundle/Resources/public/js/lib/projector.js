@@ -1,5 +1,6 @@
 /**
- * Projector: projects a voxelmodel onto a origin intersecting plane specified by the given vector
+ * Projector: projects a voxelmodel onto an origin intersecting plane
+ * specified by the given vector.
  *
  * @param voxels
  * @param vector
@@ -7,18 +8,35 @@
  */
 function Projector(voxels, vector) {
 
-    var projectionAxis;
-    var axes = determineAxes(vector);
+    var axes       = determineAxes(vector);
     var projection = project(voxels, axes);
 
+    /**
+     * Projects a voxel at (v0,v1,v2) onto the (v0,v1) plane
+     *
+     * v1
+     * |
+     * |
+     * \----- v0
+     *  \
+     *   v2
+     *
+     * @param voxels
+     * @param axes
+     * @returns {Array}
+     */
     function project(voxels, axes) {
         var projection = [];
         for (var i = 0; i < voxels.length; i++) {
             var voxel = voxels[i];
-            if (typeof projection[voxel[axes[0]]] == "undefined") {
-                projection[voxel[axes[0]]] = [];
+            var v0 = voxel[axes[0]];
+            var v1 = voxel[axes[1]];
+            var v2 = voxel[axes[2]];
+
+            if (typeof projection[v0] == "undefined") {
+                projection[v0] = [];
             }
-            projection[voxel[axes[0]]] [voxel[axes[1]]] = voxel[axes[2]];
+            projection[v0][v1] = v2;
         }
 
         return projection;
@@ -26,6 +44,7 @@ function Projector(voxels, vector) {
 
     function determineAxes(vector) {
         var axes = [];
+        var projectionAxis;
         for (var axis in vector) {
             if (vector[axis] != 0) {
                 projectionAxis = axis;
@@ -51,14 +70,14 @@ function Projector(voxels, vector) {
     };
 
     /**
-     * Determines the distance of the original voxel to the projection screen
+     * Determines the distance of the original voxel to the projection plane
      *
      * @param x
      * @param y
      * @returns {*}
      */
     this.distanceOf = function (x, y) {
-        switch (projectionAxis) {
+        switch (axes[2]) {
             case "y":
 
                 return this.valueAt(x, y);

@@ -34,7 +34,7 @@ class SnapshotController extends Controller
         $imgBase64 = $request->get('img');
 
         $image = new Image();
-        $image->setTs(time());
+        $image->setTimestamp(time());
         $image->setData($imgBase64);
 
         $this->imageRepository->add($image);
@@ -49,7 +49,7 @@ class SnapshotController extends Controller
      */
     public function loadAction()
     {
-        $images = $this->imageRepository->findBy([], ['ts' => -1], 6);
+        $images = $this->imageRepository->findBy([], ['timestamp' => -1], 6);
 
         return new JsonResponse([
                 'images' => $images
