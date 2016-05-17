@@ -16,7 +16,7 @@ class PrinterTest extends PHPUnit_Framework_TestCase
         $this->printer = new Printer();
     }
 
-    public function testSingleLayer()
+    public function testPrinterShouldAddVoxels()
     {
         $printer = $this->printer;
         $printer->moveNozzle(0,0);
@@ -28,7 +28,7 @@ class PrinterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(4 , $model->getVoxelCount());
     }
 
-    public function testSingleLayerIdenticalPositions()
+    public function testPrinterShouldNotAddAtTheSamePositionTwice()
     {
         $printer = $this->printer;
         $printer->moveNozzle(0,0);
@@ -46,7 +46,7 @@ class PrinterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(4 , $model->getVoxelCount());
     }
 
-    public function testTwoLayers()
+    public function testPrinterShouldBeAbleToAddVoxelsToMultipleLayers()
     {
         $printer = $this->printer;
         $printer->moveNozzle(0,0);
@@ -65,7 +65,7 @@ class PrinterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(8 , $model->getVoxelCount());
     }
 
-    public function testNozzle()
+    public function testPrinterShouldRespectTheNozzleState()
     {
         $printer = $this->printer;
 
@@ -84,5 +84,31 @@ class PrinterTest extends PHPUnit_Framework_TestCase
         $printer->moveNozzle(1,2);
 
         $this->assertEquals(4 , $printer->getVoxelModel()->getVoxelCount());
+    }
+
+    public function testPrinterShouldNotPrintOutsideItsConfiguredSize() {
+        $printer = new Printer($size = 5);
+
+        $printer->moveNozzle(0,0);
+        $printer->moveNozzle(0,1);
+        $printer->moveNozzle(5,2);
+        $printer->moveNozzle(1,5);
+        $printer->moveNozzle(-2,2);
+        $printer->moveNozzle(1,-2);
+        $printer->moveNozzle(10,12);
+
+        $model = $printer->getVoxelModel();
+        $this->assertEquals(2 , $model->getVoxelCount());
+
+        $printer->nextLayer();
+        $printer->nextLayer();
+        $printer->nextLayer();
+        $printer->nextLayer();
+        $printer->moveNozzle(0,0);
+        $this->assertEquals(3 , $model->getVoxelCount());
+
+        $printer->nextLayer();
+        $printer->moveNozzle(0,0);
+        $this->assertEquals(3 , $model->getVoxelCount());
     }
 }
