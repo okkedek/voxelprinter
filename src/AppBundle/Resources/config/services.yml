@@ -1,4 +1,5 @@
 parameters:
+    voxelprinter.size: 12
     entity.image: "AppBundle:Image"
 
 services:

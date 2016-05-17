@@ -31,10 +31,13 @@ class PrinterController extends Controller
      */
     public function gridViewAction()
     {
+        $size = $this->getParameter("voxelprinter.size");
         $viewModel = [
-            'width' => 10,
-            'height' => 10,
+            'width' => $size,
+            'height' => $size,
         ];
+        $this->printerRepository->save(new Printer($size));
+
         return $this->render('@App/printer/printer.html.twig', $viewModel);
     }
 
@@ -150,6 +153,7 @@ class PrinterController extends Controller
     protected function renderResponse(Printer $printer)
     {
         return new JsonResponse([
+                'nozzleState' => $printer->getNozzleState(),
                 'currentLayer' => $printer->getCurrentLayer(),
                 'voxels' => $printer->getVoxelModel()->getVoxels(),
             ]

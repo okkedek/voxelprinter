@@ -17,6 +17,11 @@ class Printer
     protected $model;
 
     /**
+     * @var int maximum width and height
+     */
+    protected $size;
+
+    /**
      * @var int Current layer being printed
      */
     protected $layer = 0;
@@ -26,8 +31,9 @@ class Printer
      */
     protected $nozzleOpen = true;
 
-    public function __construct( )
+    public function __construct($size = 10)
     {
+        $this->size = $size - 1;
         $this->model = new VoxelModel();
     }
 
@@ -39,9 +45,12 @@ class Printer
      */
     public function moveNozzle($x, $y)
     {
-        if ($this->nozzleOpen === true ) {
-            $this->model->add( new Voxel($x,  $this->layer, $y));
-        }
+        if ($this->nozzleOpen !== true) return;
+        if ($x < 0 || $y < 0) return;
+        if ($x > $this->size || $y > $this->size) return;
+
+
+        $this->model->add(new Voxel($x, $this->layer, $y));
     }
 
     /**
@@ -77,7 +86,7 @@ class Printer
      */
     public function nextLayer()
     {
-        if ($this->layer < 10) {
+        if ($this->layer < $this->size) {
             $this->layer++;
         }
     }
@@ -99,5 +108,8 @@ class Printer
         $this->nozzleOpen = !$this->nozzleOpen;
     }
 
-
+    public function getNozzleState()
+    {
+        return $this->nozzleOpen;
+    }
 }
