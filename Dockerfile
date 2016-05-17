@@ -22,7 +22,6 @@ RUN useradd -Um web
 WORKDIR /var/www/html/
 
 ADD composer.* ./
-ADD phpunit.* ./
 ADD . .
 RUN chown -R web.web .
 
